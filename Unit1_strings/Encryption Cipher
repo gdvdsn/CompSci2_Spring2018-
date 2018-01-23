@@ -1,0 +1,230 @@
+
+import hashlib
+import string
+import time
+
+#get messageString
+messageString = input("Message to be encrypted: ")
+encryptedMessageString = ""
+
+#shift cipher
+print("The first encyption will be a shift cipher.\n")
+
+shift = int(input("What shift do you want to use? (Input as integer)\n"))
+
+    #creating encryptedMessageString w/ shift
+for x in range(len(messageString)):
+    encryptedMessageString += chr(ord(messageString[x]) + shift)
+    #time.sleep(.5)
+print("\n\n\n...Processing encryption...\n")
+time.sleep(2)
+print("Your encrypted message is below: \n")
+print(encryptedMessageString + "\n")
+
+time.sleep(3)
+
+#substitution cipher
+
+print("\nThe second encryption will be a substitution cipher.\n\nYou will be able to put a certain amount of random characters "
+      "in place of\na corresponding amount of different characters already present in\nyour now encrypted message.\n")
+
+
+print("Every letter 'x' ('x' as inputted by the user) in your encrypted message will be\nreplaced with 'y' ('y' as inputted by the user).\n\n"
+      "In the end, all character 'x's will be replaced with character 'y's.\n\nNOTE: There cannot be duplicate 'y'  characters!\n")
+
+    #continue thru substitution(?)
+continue_thru_substitution = ""
+continue_thru_substitution = input("It is important that you have read completely and thoroughly the above\ntext in order to avoid errors\n"
+                                   "while compiling the following substitution cipher.\n\nWould you like to use a substitution cipher? (Yes/No)\n")
+
+pass_continue_thru_substitution = False
+
+if continue_thru_substitution == "yes" or continue_thru_substitution == "Yes":
+    pass_continue_thru_substitution = True
+else:
+    print("You have chosen to forgo the substitution cipher.")
+    time.sleep(3)
+
+if pass_continue_thru_substitution == True:
+        #how many substitutions
+    num_substitutions = int(input("\nHow many substitutions do you want to make? (Number cannot exceed the length of the message or number of unique characters within the message.)\n"))
+
+        #set of unique characters within encryptedMessageString for 'y'
+    num_unique_chars_encryptedMessageString_list = []
+    num_unique_chars_encryptedMessageString_set = []
+
+    for i in range(len(messageString)):
+        num_unique_chars_encryptedMessageString_list.append(chr(ord(encryptedMessageString[i])))
+        num_unique_chars_encryptedMessageString_set = set(num_unique_chars_encryptedMessageString_list)
+
+        #numSubstitutions invalid if...
+    if (num_substitutions > (len(encryptedMessageString))) or (num_substitutions > (len(num_unique_chars_encryptedMessageString_list))):
+
+        #numSubstitutions invalid if is > length of encryptedMessageString
+        while(num_substitutions > len(encryptedMessageString)):
+            num_substitutions = int(input("This number exceeds the length of your message. Please input a different integer.\n"))
+
+            #numSubstitutions invalid if is > # of uniqe characters within encryptedMessageString
+        while(len(encryptedMessageString)) > (len(num_unique_chars_encryptedMessageString_set)):
+            num_substitutions = int(input("This number exceeds the length of unique characters within your message. Please input a different integer.\n"))
+            
+        #substitution inputs
+    substitution_x = ""
+    substitution_y = ""
+    substitution_list = []
+
+    print("Reminder: Your substitutions should be made out to substitute characters present\nin your now encrypted message. NOT your original message.\n\nYour encrypted message is: " + encryptedMessageString) 
+    for j in range(num_substitutions):
+        substitution_x = input("\nInput a character for 'x': \n")
+        while(len(substitution_x)) > 1:
+            substitution_x = input("Character 'x' must be only one character long.\nPlease input a different character for 'x'.")
+        #y list
+        print("And now for the corresponding 'y' character(s).\n")
+        substitution_y = input("Input a corresponding character(s) for 'y': \n")
+        if substitution_y not in substitution_list:
+            substitution_list.append(substitution_y)
+            encryptedMessageString = (encryptedMessageString.replace(substitution_x, substitution_y))
+        else:
+            contWhileLoop = True
+            while contWhileLoop == True:
+                substitution_y = input("You already have a substitution cipher for '" + substitution_y + ".' Please input a different character(s) for 'y'.'")
+                if substitution_y in substitution_list:
+                    break
+                else:
+                    substitution_list.append(substitution_y)
+                    encryptedMessageString = (encryptedMessageString.replace(substitution_x, substitution_y))
+                    contWhileLoop = False
+
+    time.sleep(3)
+
+    print("\n\n\n...Processing encryption...\n")
+    time.sleep(2)
+    print("Your further encrypted message is below: \n")
+    print(encryptedMessageString)
+
+    time.sleep(4)
+
+#hash message md5
+print("\n\n\nAnd now for the final encryption. Your message will be 'hashed,' meaning that it will be stored within the program out of plain text.\n")
+time.sleep(5)
+hashed_encryptedMessageString = ("\n" + encryptedMessageString)
+# Assumes the default UTF-8
+hash_object = hashlib.md5(hashed_encryptedMessageString.encode())
+msg_hash = hash_object.hexdigest()
+print(msg_hash)
+
+time.sleep(5)
+decryptMessageString = input("Do you want to decrypt the message?(Yes/No)\n")
+if decryptMessageString == "yes" or decryptMessageString == "Yes":
+    print(" ")
+else:
+    print("Well I'm going to decrypt it anyway.")
+
+#___________________________________________________________________________________________
+
+first_part = ""
+second_part = ""
+
+if (len(msg_hash)) > (len(encryptedMessageString)):
+    for i in range(len(msg_hash) - (len(encryptedMessageString)) + 1):
+        end_char = len(hashed_encryptedMessageString) - 1
+        first_part = msg_hash[:len(encryptedMessageString)]
+        the_part = msg_hash[len(encryptedMessageString):len(msg_hash) - i]
+        shift_num_to_convert_to_space = ord(msg_hash[end_char]) - 31       
+        for x in range(shift_num_to_convert_to_space):
+            second_part = the_part + chr(ord(msg_hash[end_char]) - x)
+            print(first_part + second_part + "\n" * 25)
+            time.sleep(.005)
+        second_part = second_part.replace(hashed_encryptedMessageString[end_char], "")
+        
+if (len(encryptedMessageString)) > (len(msg_hash)):
+    for i in range(len(encryptedMessageString) - (len(msg_hash)) + 1):
+        end_char = len(msg_hash) - 1
+        first_part = encryptedMessageString[:len(msg_hash)]
+        the_part = encryptedMessageString[len(msg_hash):len(encryptedMessageString) - i]
+        shift_num_to_convert_to_space = ord(encryptedMessageString[end_char]) - 31       
+        for x in range(shift_num_to_convert_to_space):
+            second_part = the_part + chr(ord(encryptedMessageString[end_char]) - x)
+            print(first_part + second_part + "\n" * 25)
+            time.sleep(.005)
+        second_part = second_part.replace(msg_hash[end_char], "")
+
+if (len(msg_hash)) == (len(encryptedMessageString)):
+    for i in range(len(msg_hash) - (len(encryptedMessageString)) + 1):
+        end_char = len(hashed_encryptedMessageString) - 1
+        first_part = msg_hash[:len(encryptedMessageString)]
+        the_part = msg_hash[len(encryptedMessageString):len(msg_hash) - i]
+        shift_num_to_convert_to_space = ord(msg_hash[end_char]) - 31       
+        for x in range(shift_num_to_convert_to_space):
+            second_part = the_part + chr(ord(msg_hash[end_char]) - x)
+            print(first_part + second_part + "\n" * 25)
+            time.sleep(.005)
+        second_part = second_part.replace(hashed_encryptedMessageString[end_char], "")
+
+complete_step_one = first_part + second_part
+
+if (len(complete_step_one)) > (len(messageString)):
+    for i in range(len(complete_step_one) - (len(messageString)) + 1):
+        end_char = len(messageString) - 1
+        first_part = complete_step_one[:len(messageString)]
+        the_part = complete_step_one[len(messageString):len(complete_step_one) - i]
+        shift_num_to_convert_to_space = ord(complete_step_one[end_char]) - 31       
+        for x in range(shift_num_to_convert_to_space):
+            second_part = the_part + chr(ord(complete_step_one[end_char]) - x)
+            print(first_part + second_part + "\n" * 25)
+            time.sleep(.005)
+        second_part = second_part.replace(hashed_encryptedMessageString[end_char], "")
+                                                                                                                                                                                                                                                                                                                                      
+complete_part_one = first_part + second_part
+
+#messageString variable parts for decryption
+first_part = ""
+third_part = ""
+
+#wait time(s) for decryption processs
+if len(messageString) >= 9:
+   rest_time = .15
+elif len(messageString) >= 5 and len(messageString)<= 8:
+    rest_time = .25
+elif len(messageString) < 5: 
+    rest_time = .35
+
+#decryption process
+for i in range(len(messageString)):
+    second_part = messageString[i]
+    third_part = "-" * (len(messageString) - (i + 1))
+    for j in range(shift):
+        second_part = chr(ord(messageString[i]) + shift - j - 1)
+        print(first_part + second_part + third_part + "\n" * 25)
+        time.sleep(rest_time)
+    first_part += second_part
+
+#end sequence
+print("\n" * 20)
+print("...Processing...\n")
+time.sleep(.4)
+print(".")
+time.sleep(.4)
+print(".")
+time.sleep(.4)
+print(".\n")
+time.sleep(.4)
+print("Your message (shown below): \n\n")
+time.sleep(.5)
+print(first_part + "\n\n")
+time.sleep(.5)
+print("Has been successfully decrypted.\n")
+time.sleep(1)
+print("Have a nice day\n.")
+time.sleep(.6)
+print(".")
+time.sleep(.6)
+print(".")
+time.sleep(.6)
+print(".\n")
+time.sleep(.6)
+print(":)" + "\n" * 10)
+
+
+        
+        
