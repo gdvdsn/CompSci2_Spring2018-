@@ -1,0 +1,52 @@
+encryptedMessageString = input("Input message: ")
+
+#how many substitutions
+num_substitutions = int(input("\nHow many substitutions do you want to make? (Number cannot exceed the length of the message or number of unique characters within the message.)\n"))
+
+#set of unique characters within encryptedMessageString for 'y'
+num_unique_chars_encryptedMessageString_list = []
+num_unique_chars_encryptedMessageString_set = []
+
+for i in range(len(encryptedMessageString)):
+    num_unique_chars_encryptedMessageString_list.append(chr(ord(encryptedMessageString[i])))
+    num_unique_chars_encryptedMessageString_set = set(num_unique_chars_encryptedMessageString_list)
+
+    #numSubstitutions invalid if...
+if (num_substitutions > (len(encryptedMessageString))) or (num_substitutions > (len(num_unique_chars_encryptedMessageString_list))):
+
+    #numSubstitutions invalid if is > length of encryptedMessageString
+    while(num_substitutions > len(encryptedMessageString)):
+        num_substitutions = int(input("This number exceeds the length of your message. Please input a different integer.\n"))
+
+        #numSubstitutions invalid if is > # of uniqe characters within encryptedMessageString
+    while(len(encryptedMessageString)) > (len(num_unique_chars_encryptedMessageString_set)):
+        num_substitutions = int(input("This number exceeds the length of unique characters within your message. Please input a different integer.\n"))
+            
+    #substitution inputs
+substitution_x = ""
+substitution_y = ""
+substitution_list = []
+
+print("Reminder: Your substitutions should be made out to substitute characters present\nin your now encrypted message. NOT your original message.\n\nYour encrypted message is: " + encryptedMessageString) 
+for j in range(num_substitutions):
+    substitution_x = input("\nInput a character for 'x': \n")
+    while(len(substitution_x)) > 1:
+        substitution_x = input("Character 'x' must be only one character long.\nPlease input a different character for 'x'.")
+    #y list
+    print("And now for the corresponding 'y' character(s).\n")
+    substitution_y = input("Input a corresponding character(s) for 'y': \n")
+    if substitution_y not in substitution_list:
+        substitution_list.append(substitution_y)
+        encryptedMessageString = (encryptedMessageString.replace(substitution_x, substitution_y))
+    else:
+        contWhileLoop = True
+        while contWhileLoop == True:
+            substitution_y = input("You already have a substitution cipher for '" + substitution_y + ".' Please input a different character(s) for 'y'.'")
+            if substitution_y in substitution_list:
+                break
+            else:
+                substitution_list.append(substitution_y)
+                encryptedMessageString = (encryptedMessageString.replace(substitution_x, substitution_y))
+                contWhileLoop = False
+
+print(encryptedMessageString)
