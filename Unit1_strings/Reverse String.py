@@ -2,7 +2,7 @@ def reverse(s):
     r_string = ""
 
     for x in range(len(s)):
-        r_string += s[len(s) - x - 1]
+        r_string += s[-x - 1]
 
     return r_string
 

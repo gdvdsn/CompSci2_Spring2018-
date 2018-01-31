@@ -1,0 +1,14 @@
+##Gabe Davidsons
+##Unit 10, text file response
+
+The differences between string, list, and tuple.
+
+While a string and a list are both mutatable variables, a tuple is actually unchangeable.
+
+A tuple stores two pieces of data within one variable, a string one, and a list infinite.
+
+Between a list and a string, a list is much more useful of a data type, because it allows the user
+to store endless pieces of data while also allowing flexibility in data types stored, as well as
+endless mutability. In the case of a string, there is only one data type allowed (string).
+
+I hate tuples because I can't change them and that gives me errors sometimes.

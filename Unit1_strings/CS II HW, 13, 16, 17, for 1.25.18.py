@@ -140,7 +140,7 @@ def main():
         t.back(200)
         t.down()
         t.speed(9)
-        drawLsystem13(t, inst, 90, 5)   # draw the picture
+        drawLsystem13(t, inst, 105, 5)   # draw the picture
                                       # angle 60, segment length 5
         wn.exitonclick()
 
