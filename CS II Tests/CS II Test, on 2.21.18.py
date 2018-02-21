@@ -54,18 +54,21 @@ def longest_word(t):
 
     return return_statement
 
-#encrypt_6_string = encrypt_6("Hello World My Name Is Gabe Davidson")
-#print(encrypt_6_string)
+def main():
+    #encrypt_6_string = encrypt_6("Hello World My Name Is Gabe Davidson")
+    #print(encrypt_6_string)
 
-rand_num_list = []
+    rand_num_list = []
 
-for k in range(100):
-    rand_num_list.append(random.randint(0, 1000))
+    for k in range(100):
+        rand_num_list.append(random.randint(0, 1000))
 
-#avg_rand_num_list = find_avg(rand_num_list)
-#print(avg_rand_num_list)
+    #avg_rand_num_list = find_avg(rand_num_list)
+    #print(avg_rand_num_list)
 
-text = open("CS II Test, text, on 2.21.18")
+    text = open("CS II Test, text, on 2.21.18")
 
-#longest_word_word = longest_word(text)
-#print(longest_word_word)
+    #longest_word_word = longest_word(text)
+    #print(longest_word_word)
+
+main()
