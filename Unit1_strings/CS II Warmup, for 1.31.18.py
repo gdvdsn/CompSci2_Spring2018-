@@ -12,6 +12,7 @@ def each_word_(text):
             new_text += l
 
     new_text.lower()
+    print(new_text)
 
     all_words = new_text.split()
     unique_words = []
