@@ -31,10 +31,11 @@ def sort(s):
         else:
             n_dic[word] += 1
 
-    #for term in n_dic:
-        #print(term, "  ", n_dic[term])
+    for k in range(len(s)):
+        if s[k] in n_dic == True:
+            del n_dic[s[k]]
 
-    print(n_dic)
+    return n_dic
 
 def main():
     file = open("Unsorted Alice in Wonderland")
@@ -42,6 +43,10 @@ def main():
 
     cleaned_data = clean(file)
     sorted_data = sort(cleaned_data)
-    #print(sorted_data)
+
+    for h in sorted_data:
+        w_out.write(str(w_out.write("{0}    :    {1}\n".format(h, sorted_data[h]))))
+
+    print(w_out)
 
 main()
