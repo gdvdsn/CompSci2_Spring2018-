@@ -99,7 +99,11 @@ def count_all_to_histo(old_dic):
 
 ss = input(":")
 
-text = open("guido_vonRossum_speech(2).txt")
+try:
+    text = open("guido_vonRossum_speech(2).txt")
+except FileNotFoundError:
+    print("This file is not found!")
+
 data = text.read()
 
 letter_count = count_all(ss)

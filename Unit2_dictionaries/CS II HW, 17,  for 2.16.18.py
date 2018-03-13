@@ -38,8 +38,15 @@ def sort(s):
     return n_dic
 
 def main():
-    file = open("Unsorted Alice in Wonderland")
-    w_out = open("Sorted Alice in Wonderland", "w")
+    try:
+        file = open("Unsorted Alice in Wonderland")
+    except FileNotFoundError:
+        print("This file is not found!")
+
+    try:
+        w_out = open("Sorted Alice in Wonderland", "w")
+    except FileNotFoundError:
+        print("This second file is not found!")
 
     cleaned_data = clean(file)
     sorted_data = sort(cleaned_data)
